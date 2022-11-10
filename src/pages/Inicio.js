@@ -1,9 +1,15 @@
 import { Heading, Box, Text, HStack,Select, Spacer, TableContainer, Table, Thead, Tr,Td,Th,Tbody,Icon } from '@chakra-ui/react';
 import { FaMusic,FaFileAlt } from "react-icons/fa"
+import { useNavigate } from 'react-router-dom';
 
 import { MyButton } from '../components/MyButton';
 
 export function Inicio() {
+  const navigate = useNavigate()
+
+  const goToEncuesta = ()=>{
+    navigate("/encuesta",{replace:true})
+  }
     const contenidos = [
         {
         id:1,
@@ -68,7 +74,7 @@ export function Inicio() {
               <option>Otro doc</option>
             </Select>
             <Spacer></Spacer>
-            <MyButton>Descargar</MyButton>
+            <MyButton handleClick={goToEncuesta}>Descargar</MyButton>
           </HStack>
         </Box>
         <TableContainer>

@@ -1,7 +1,7 @@
 import { Button } from '@chakra-ui/react';
 
 export function MyButton(props) {
-    const onClick = ()=>{
+    const onClick = (params)=>{
         props.handleClick()
     }
   return (
@@ -11,7 +11,8 @@ export function MyButton(props) {
       color={props.outlined ? '#7c4cf2' : 'white'}
       w="150px"
       variant={props.outlined ? 'outline' : 'solid'}
-      onClick={onClick}
+      onClick={props.handleClick && onClick}
+      type={props.type || "button"}
     >{props.children}
     </Button>
   );

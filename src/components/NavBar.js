@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   ButtonGroup,
   HStack,
   Avatar,
@@ -11,9 +10,11 @@ import { MyButton } from './MyButton';
 import { ColorModeSwitcher } from '../ColorModeSwitcher';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 export function NavBar() {
   const [active, setActive] = useState(true);
   const navigate = useNavigate()
+  const location = useLocation()
   function handleActive(param){
     setActive(!active);
     navigate(param,{replace:true})
@@ -25,10 +26,10 @@ export function NavBar() {
       <HStack px="20px">
         <HStack spacing={2}>
           <ButtonGroup>
-            <MyButton handleClick={()=>handleActive("/")} outlined={active}>Inicio</MyButton>
+            <MyButton  handleClick={()=>handleActive("/")} outlined={active}>Inicio</MyButton>
           </ButtonGroup>
           <ButtonGroup>
-            <MyButton handleClick={()=>handleActive("/reporte")} outlined={!active}>Reporte</MyButton>
+            <MyButton  handleClick={()=>handleActive("/reporte")} outlined={!active}>Reporte</MyButton>
           </ButtonGroup>
         </HStack>
         <Spacer></Spacer>
