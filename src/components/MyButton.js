@@ -1,8 +1,8 @@
 import { Button } from '@chakra-ui/react';
 
 export function MyButton(props) {
-    const handleClick = ()=>{
-        props.handleView()
+    const onClick = ()=>{
+        props.handleClick()
     }
   return (
     <Button
@@ -11,7 +11,7 @@ export function MyButton(props) {
       color={props.outlined ? '#7c4cf2' : 'white'}
       w="150px"
       variant={props.outlined ? 'outline' : 'solid'}
-      onClick={handleClick}
+      onClick={onClick}
     >{props.children}
     </Button>
   );

@@ -25,10 +25,10 @@ export function NavBar() {
       <HStack px="20px">
         <HStack spacing={2}>
           <ButtonGroup>
-            <MyButton handleView={()=>handleActive("/")} outlined={active}>Inicio</MyButton>
+            <MyButton handleClick={()=>handleActive("/")} outlined={active}>Inicio</MyButton>
           </ButtonGroup>
           <ButtonGroup>
-            <MyButton handleView={()=>handleActive("/reporte")} outlined={!active}>Reporte</MyButton>
+            <MyButton handleClick={()=>handleActive("/reporte")} outlined={!active}>Reporte</MyButton>
           </ButtonGroup>
         </HStack>
         <Spacer></Spacer>
