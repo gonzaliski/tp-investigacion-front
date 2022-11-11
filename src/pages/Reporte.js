@@ -60,6 +60,11 @@ export function Reporte(){
           }
   
   ]
+
+  const sortContent = (contentList) => {
+   return contentList.sort((a, b) => b.puntaje_promedio - a.puntaje_promedio)
+   
+  }
   
     return(
         <>
@@ -92,7 +97,7 @@ export function Reporte(){
                     </Tr>
                 </Thead>
                 <Tbody>
-                    {contenidos.map(cont=>(
+                    {sortContent(contenidos).map(cont=>(
                     <Tr key={cont.id}>
                         <Td > <Icon as={cont.tipo_contenido == "musica" ? FaMusic : FaFileAlt }/> {cont.titulo}</Td>
                         <Td> {cont.velocidad}</Td>

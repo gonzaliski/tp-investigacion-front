@@ -1,62 +1,31 @@
 import { Heading, Box, Text, HStack,Select, Spacer, TableContainer, Table, Thead, Tr,Td,Th,Tbody,Icon } from '@chakra-ui/react';
 import { FaMusic,FaFileAlt } from "react-icons/fa"
 import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react'
 
 import { MyButton } from '../components/MyButton';
+import { contenidoService } from './../services/ContenidoService';
 
 export function Inicio() {
   const navigate = useNavigate()
 
-  const goToEncuesta = ()=>{
-    navigate("/encuesta",{replace:true})
+  const goToEncuesta = () => {
+    navigate("/encuesta",{replace:'true'})
   }
-    const contenidos = [
-        {
-        id:1,
-        titulo:"Smells like teen spirit - Nirvana",
-        velocidad:"15mbps",
-        puntaje:8.6,
-        puntaje_promedio:8.6,
-        tipo_contenido:"musica"
-        },
-        {
-        id:2,
-        titulo:"Wind of change - Scorpions",
-        velocidad:"13mbps",
-        puntaje:null,
-        puntaje_promedio:7.8,
-        tipo_contenido:"musica"
 
-        },
-        {
-        id:3,
-        titulo:"Resumen primer parcial - Base de datos",
-        velocidad:"12mbps",
-        puntaje:null,
-        puntaje_promedio:8.3,
-        tipo_contenido:"documento"
+  const goToEditar = (id) => {
+    navigate(`/encuesta/editar/${id}`,{replace:'true'})
+  }
+  const getAllContenidos = () => {
+    const content = contenidoService.getAllContenidos()
+    setContenidos(content)
+  }
 
-        },
-        {
-        id:4,
-        titulo:"Everlong - Foo Fighters",
-        velocidad:"14mbps",
-        puntaje:9.2,
-        puntaje_promedio:9.2,
-        tipo_contenido:"musica"
+  const [contenidos, setContenidos] = useState([])
 
-        },
-        {
-        id:5,
-        titulo:"Resumen segundo parcial - Base de datos",
-        velocidad:"13mbps",
-        puntaje:8.5,
-        puntaje_promedio:8.5,
-        tipo_contenido:"documento"
-
-        }
-
-]
+  useEffect( () => {
+    getAllContenidos()
+  })
 
 
   return (
@@ -92,7 +61,7 @@ export function Inicio() {
                     <Tr key={cont.id}>
                         <Td> <Icon as={cont.tipo_contenido == "musica" ? FaMusic : FaFileAlt }/> {cont.titulo}</Td>
                         <Td> {cont.velocidad}</Td>
-                        <Td> {cont.puntaje}</Td>
+                        <Td onClick={ cont.puntaje? () => goToEditar(cont.idDescarga) : null} cursor={cont.puntaje? 'pointer' : ''}> {cont.puntaje}</Td>
                         <Td> {cont.puntaje_promedio}</Td>
                     </Tr>
 

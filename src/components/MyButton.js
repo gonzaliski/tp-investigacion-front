@@ -13,6 +13,7 @@ export function MyButton(props) {
       variant={props.outlined ? 'outline' : 'solid'}
       onClick={props.handleClick && onClick}
       type={props.type || "button"}
+      gap={3}
     >{props.children}
     </Button>
   );
