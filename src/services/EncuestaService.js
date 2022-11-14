@@ -45,7 +45,7 @@ class EncuestaService {
     // }
     
     async actualizarEncuesta(encuesta){
-        await axios.put(`${REST_URL_SERVER}/`,encuesta.toJSON())
+        await axios.put(`${REST_URL_SERVER}/encuesta`, encuesta.toJSON())
        
     }
 
@@ -61,12 +61,12 @@ class EncuestaService {
     }
 
     async eliminarEncuesta(encuestaID){
-            await axios.delete(`${REST_URL_SERVER}/${encuestaID}`)
+            await axios.delete(`${REST_URL_SERVER}/deleteEncuesta/${encuestaID}`)
             
         }
 
     async createEncuesta(encuesta){
-        await axios.post(`${REST_URL_SERVER}/`, encuesta.toJSON())
+        await axios.post(`${REST_URL_SERVER}/createEncuesta`, encuesta.toJSON())
     }
     
 }

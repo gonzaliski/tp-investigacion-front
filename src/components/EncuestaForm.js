@@ -18,10 +18,10 @@ import { user } from './../services/AuthService';
 
 const EncuestaForm = (props) => {
 
-    const idDescarga = +(new URL(document.location)).searchParams.get('idDescarga') 
+    const idContenido = +(new URL(document.location)).searchParams.get('idContenido') 
     const [encuesta, setEncuesta] = useState({
-      id_descarga: idDescarga,
-      id_usuario: user.id,
+      idContenido,
+      idUsuario: user.id,
       puntaje: 5
     })
 
