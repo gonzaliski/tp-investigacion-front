@@ -50,10 +50,10 @@ export function Inicio() {
             <Table>
                 <Thead>
                     <Tr>
-                        <Th>Historial de descargas</Th>
-                        <Th>Velocidad</Th>
-                        <Th>Mi puntaje</Th>
-                        <Th>Puntaje Promedio</Th>
+                        <Th fontSize="lg">Historial de descargas</Th>
+                        <Th fontSize="lg">Velocidad</Th>
+                        <Th fontSize="lg">Mi puntaje</Th>
+                        <Th fontSize="lg">Puntaje Promedio</Th>
                     </Tr>
                 </Thead>
                 <Tbody>
