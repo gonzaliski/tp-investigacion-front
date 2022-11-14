@@ -1,3 +1,6 @@
+import axios from 'axios';
+import { ContendidoDom } from '../domain/contenidoDomain';
+
 class ContenidoService {
     contenidos =  [
         {
@@ -54,7 +57,15 @@ class ContenidoService {
 
     getAllContenidos(){
         return this.contenidos
+    }  
+    
+    async getAll(){
+        const contenidoJson = await axios.get(`http://localhost:9000/contenidos`)
+        const contenidos = contenidoJson.data.map((contenidoJson) =>  ContendidoDom.fromJson(contenidoJson) )
+        return contenidos
     }
+
+    
     getContenidoById(id){
         return this.contenidos.find( c => c.id === id)
     }

@@ -19,10 +19,15 @@ const EditarEncuesta = () => {
         setEncuesta(cont)
     }
 
-    const handleSubmit = () => {
+    // const handleSubmit = () => {
+    //     setEncuesta(encuesta)
+    //     encuestaService.actualizarEncuesta(encuesta)
+    //     contenidoService.actualizarPuntaje(encuesta.id, encuesta.puntaje)
+    //     navigate('/')
+    // }   
+     const handleSubmit = () => {
         setEncuesta(encuesta)
         encuestaService.actualizarEncuesta(encuesta)
-        contenidoService.actualizarPuntaje(encuesta.id, encuesta.puntaje)
         navigate('/')
     }
 

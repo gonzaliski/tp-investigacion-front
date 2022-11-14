@@ -6,7 +6,8 @@ import { FaMusic,FaFileAlt } from "react-icons/fa"
 import { useNavigate } from 'react-router-dom';
 
 import { MyButton } from '../components/MyButton';
-import  { useState } from 'react'
+import  { useEffect ,useState } from 'react'
+import { reporteService } from '../services/ReporteService';
 
 
  
@@ -65,21 +66,32 @@ export function Reporte(){
    return contentList.sort((a, b) => b.puntaje_promedio - a.puntaje_promedio)
    
   }
+
+  const[contenido , setContenido] = useState([])
+
+  const traerReporte = async () => {
+    const contenido = await reporteService.allInstance()
+    setContenido(contenido)
+  }
+
+  useEffect( () => {
+    traerReporte ()
+  }, [])
   
     return(
-        <>
-       <Heading>Reporte Top-5</Heading>
-      <Box>
-      <Text align="left" fontSize='2xl'>Ordenar por</Text>
-        <Box w="80vw" py="10px" px="15px" >
-                <RadioGroup onChange={setValue} value={value}>
-            <Stack  direction='row'>
-                <Radio colorScheme="purple" size='lg' value='1'>Puntaje promedio</Radio>
-                <Radio colorScheme="purple" size='lg' value='2'>Velocidad</Radio>
-                <Radio  colorScheme="purple"  size='lg' value='3'>Nombre</Radio>
-            </Stack>
+    <>
+    <Heading>Reporte Top-5</Heading>
+        <Box>
+            <Text align="left" fontSize='2xl'>Ordenar por</Text>
+            <Box w="80vw" py="10px" px="15px" >
+            <RadioGroup onChange={setValue} value={value}>
+                <Stack  direction='row'>
+                    <Radio colorScheme="purple" size='lg' value='1'>Puntaje promedio</Radio>
+                    <Radio colorScheme="purple" size='lg' value='2'>Velocidad</Radio>
+                    <Radio  colorScheme="purple"  size='lg' value='3'>Nombre</Radio>
+                </Stack>
             </RadioGroup>
-        </Box>
+            </Box>
 
         <Box margin="20px">
             <Table display="flex" alignItems="center" gap="10px" paddingLeft="px" >
@@ -91,13 +103,13 @@ export function Reporte(){
             <Table>
                 <Thead>
                     <Tr>
-                        <Th>Historial de descargas</Th>
-                        <Th>Velocidad</Th>
-                        <Th>Puntaje Promedio de descarga</Th>
+                        <Th fontSize="lg">Historial de descargas</Th>
+                        <Th fontSize="lg">Velocidad</Th>
+                        <Th fontSize="lg">Puntaje Promedio de descarga</Th>
                     </Tr>
                 </Thead>
                 <Tbody>
-                    {sortContent(contenidos).map(cont=>(
+                    {sortContent(contenido).map(cont=>(
                     <Tr key={cont.id}>
                         <Td > <Icon as={cont.tipo_contenido == "musica" ? FaMusic : FaFileAlt }/> {cont.titulo}</Td>
                         <Td> {cont.velocidad}</Td>
