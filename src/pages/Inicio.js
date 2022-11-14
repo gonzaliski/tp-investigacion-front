@@ -29,8 +29,11 @@ export function Inicio() {
     setContenidos(content)
   }
 
-  const [contenidos, setContenidos] = useState([])
+  const handleDownload = (id) => {
+    goToEncuesta(id)
+  }
 
+  const [contenidos, setContenidos] = useState([])
 
   
 
