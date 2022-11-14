@@ -14,52 +14,60 @@ import {
 
 } from '@chakra-ui/react';
 import { useState, useEffect } from 'react'
+import { user } from './../services/AuthService';
 
 const EncuestaForm = (props) => {
 
-    const [encuesta, setEncuesta] = useState({})
+    const idDescarga = +(new URL(document.location)).searchParams.get('idDescarga') 
+    const [encuesta, setEncuesta] = useState({
+      id_descarga: idDescarga,
+      id_usuario: user.id,
+      puntaje: 5
+    })
+
     const [sliderValue, setSliderValue] = useState(5)
     const labelStyles = {
         mt: '2',
         ml: '0',
         fontSize: 'sm',
-      }
+    }
     
 
-    const getEncuesta = () => {
-        if(props.encuesta){
-            setEncuesta(props.encuesta)
-        }
-    }
     const actualizarEncuesta = (e) => {
-        encuesta[e.target.name] = e.target.value
-        setEncuesta({...encuesta})
+      encuesta[e.target.name] = e.target.value
+      setEncuesta({...encuesta})
     }
     const handleSliderChange = (val) => {
-        setSliderValue(val)
-        encuesta['puntaje'] = val
-        setEncuesta({...encuesta})
-        
+      setSliderValue(val)
+      encuesta['puntaje'] = val
+      setEncuesta({...encuesta})
+      
     }
 
-    useEffect(() => {
-        getEncuesta()
+    useEffect(() => {      
+      const getEncuesta = () => {
+        if(props.encuesta){
+          console.log('encuestaaa', props.encuesta)
+          setEncuesta(props.encuesta)
+        } 
+      }
+      getEncuesta()
     })
-
+    
     return (
     <>
         
       <Heading>Encuesta de Satisfaccion</Heading>
       <Box border="1px solid gray" p={[10, 10]} minW="65vw">
-        <form onSubmit={props.handleSubmit}>
+        <form onSubmit={(e) => props.handleSubmit(e, encuesta)}>
             <VStack>
               <FormControl>
                 <FormLabel>Contanos qué te gustó de la descarga</FormLabel>
                 <Textarea
-                  name="positivo"
+                  name="resumenPositivo"
                   size="md"
-                  placeholder={!!encuesta.positivo? '' : "Positivo"}ze="none"
-                  value={!!encuesta.positivo? encuesta.positivo  : ''}
+                  placeholder={!!encuesta.resumenPositivo? '' : "Positivo"} ze="none"
+                  defaultValue={!!encuesta.resumenPositivo? encuesta.resumenPositivo  : ''}
                   onChange={(e) => actualizarEncuesta(e)}
                 >
                 </Textarea>
@@ -67,10 +75,10 @@ const EncuestaForm = (props) => {
               <FormControl>
                 <FormLabel>Contanos en qué podemos mejorar</FormLabel>
                 <Textarea
-                  name="negativo"
+                  name="resumenNegativo"
                   size="md"
-                  placeholder={!!encuesta.negativo? '' : "Negativo"}
-                  value={!!encuesta.negativo? encuesta.negativo  : ''}
+                  placeholder={!!encuesta.resumenNegativo? '' : "Negativo"}
+                  defaultValue={!!encuesta.resumenNegativo? encuesta.resumenNegativo  : ''}
                   resize="none"
                   onChange={(e) => actualizarEncuesta(e)}
                   >

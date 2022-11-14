@@ -1,6 +1,6 @@
-import { Heading, Box, Text, HStack,Select, Spacer, TableContainer, Table, Thead, Tr,Td,Th,Tbody,Icon } from '@chakra-ui/react';
-import { FaMusic,FaFileAlt } from "react-icons/fa"
-import { useNavigate } from 'react-router-dom';
+import { Heading, Box, Text, HStack, Select, Spacer, TableContainer, Table, Thead, Tr, Td, Th, Tbody, Icon, Flex } from '@chakra-ui/react';
+import { FaMusic,FaFileAlt, FaDownload, FaEdit } from "react-icons/fa"
+import { createSearchParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react'
 
 import { MyButton } from '../components/MyButton';
@@ -8,9 +8,11 @@ import { contenidoService } from './../services/ContenidoService';
 
 export function Inicio() {
   const navigate = useNavigate()
+  
 
-  const goToEncuesta = () => {
-    navigate("/encuesta",{replace:'true'})
+  const goToEncuesta = (id) => {
+    const params = {idDescarga: id}
+    navigate({pathname: "/encuesta",replace:'true', search: `?${createSearchParams(params)}`})
   }
 
   const goToEditar = (id) => {
@@ -23,6 +25,7 @@ export function Inicio() {
 
   const getAllContenidos = async () => {
     const content = await contenidoService.getAll()
+    console.log(content);
     setContenidos(content)
   }
 
@@ -33,7 +36,7 @@ export function Inicio() {
 
   useEffect( () => {
     getAllContenidos()
-  })
+  },[])
 
 
   return (
@@ -60,17 +63,18 @@ export function Inicio() {
                     <Tr>
                         <Th fontSize="lg">Historial de descargas</Th>
                         <Th fontSize="lg">Velocidad</Th>
-                        <Th fontSize="lg">Mi puntaje</Th>
+                        <Th fontSize="lg">Mejor puntaje</Th>
                         <Th fontSize="lg">Puntaje Promedio</Th>
                     </Tr>
                 </Thead>
                 <Tbody>
                     {contenidos.map(cont=>(
                     <Tr key={cont.id}>
-                        <Td> <Icon as={cont.tipo_contenido == "musica" ? FaMusic : FaFileAlt }/> {cont.titulo}</Td>
-                        <Td> {cont.velocidad}</Td>
-                        <Td onClick={ cont.puntaje? () => goToEditar(cont.idDescarga) : null} cursor={cont.puntaje? 'pointer' : ''}> {cont.puntaje}</Td>
-                        <Td> {cont.puntaje_promedio}</Td>
+                        <Td> <Icon as={cont.tipoContenido == "musica" ? FaMusic : FaFileAlt }/> {cont.titulo}</Td>
+                        <Td> {cont.velocidadPromedio} Mbps</Td>
+                        <Td  > {cont.puntajeMax || null}</Td>
+                        <Td> {cont.puntajePromedio || null}</Td>
+                        <Td> <Flex gap={3}><Icon as={FaDownload} color='#7c4cf2' cursor='pointer' onClick={() => handleDownload(cont.id)}/>{cont.usuarioResponde? <Icon cursor='pointer' onClick={() => goToEditar(cont.id)} as={FaEdit} color='#7c4cf2'/> : null}</Flex> </Td>
                     </Tr>
 
                     ))}

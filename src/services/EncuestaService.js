@@ -1,33 +1,33 @@
-import { remove } from 'lodash'
 import axios from 'axios';
 import { EncuestaDom } from '../domain/encuestaDomain';
+import { REST_URL_SERVER } from './../configuration';
 class EncuestaService {
-    encuestas = [
-        {
-            id: 1,
-            positivo: 'La mejor cancion',
-            negativo: 'Nada no tiene',
-            puntaje: 8.6,
-            idDescarga: 1,
-            idUsuario: 1
-        },
-        {
-            id: 2,
-            positivo: 'Gran cancion',
-            negativo: 'Demasiado rock',
-            puntaje: 9.2,
-            idDescarga: 4,
-            idUsuario: 1
-        },
-        {
-            id: 3,
-            positivo: 'Muy buen resumen',
-            negativo: 'Muy largo',
-            puntaje: 8.5,
-            idDescarga: 5,
-            idUsuario: 1
-        },
-    ]
+    // encuestas = [
+    //     {
+    //         id: 1,
+    //         positivo: 'La mejor cancion',
+    //         negativo: 'Nada no tiene',
+    //         puntaje: 8.6,
+    //         idDescarga: 1,
+    //         idUsuario: 1
+    //     },
+    //     {
+    //         id: 2,
+    //         positivo: 'Gran cancion',
+    //         negativo: 'Demasiado rock',
+    //         puntaje: 9.2,
+    //         idDescarga: 4,
+    //         idUsuario: 1
+    //     },
+    //     {
+    //         id: 3,
+    //         positivo: 'Muy buen resumen',
+    //         negativo: 'Muy largo',
+    //         puntaje: 8.5,
+    //         idDescarga: 5,
+    //         idUsuario: 1
+    //     },
+    // ]
 
     // getEncuestaById(id){
     //     return this.encuestas.find( e => e.idDescarga === id)
@@ -45,22 +45,28 @@ class EncuestaService {
     // }
     
     async actualizarEncuesta(encuesta){
-        await axios.put(`http://localhost:9000/encuesta`,encuesta.toJson())
+        await axios.put(`${REST_URL_SERVER}/`,encuesta.toJSON())
        
     }
 
-    async getEncuestaById(userId, contenidoId){
-        const encuestaJson = await axios.get(`http://localhost:9000/editEncuesta/${userId}/contenido/${contenidoId}`)
-        return EncuestaDom.fromJson(encuestaJson)
+    async getEncuestaById(idUsuario, idContenido){
+        const encuestaJSON = await axios.get(`${REST_URL_SERVER}/getEncuesta`, {
+            params: {
+                idUsuario,
+                idContenido
+            }
+        })
+        console.log(encuestaJSON.data);
+        return EncuestaDom.fromJSON(encuestaJSON.data)
     }
 
     async eliminarEncuesta(encuestaID){
-            await axios.delete(`http://localhost:9000/deleteEncuesta/${encuestaID}`)
+            await axios.delete(`${REST_URL_SERVER}/${encuestaID}`)
             
         }
 
     async createEncuesta(encuesta){
-        await axios.post((`http://localhost:9000/createEncuesta`,encuesta.toJson()))
+        await axios.post(`${REST_URL_SERVER}/`, encuesta.toJSON())
     }
     
 }

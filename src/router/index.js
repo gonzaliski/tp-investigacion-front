@@ -9,9 +9,9 @@ function AppRoutes() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Inicio/>} />
-          <Route path="reporte" element={<Reporte />} />
-          <Route path="encuesta" element={<Encuesta />} />
-          <Route path="encuesta/editar/:id" element={<EditarEncuesta />} />
+          <Route path="/reporte" element={<Reporte />} />
+          <Route path="/encuesta" element={<Encuesta />} />
+          <Route path="/encuesta/editar/:id" element={<EditarEncuesta />} />
         </Route>
       </Routes>
     );
