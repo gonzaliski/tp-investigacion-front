@@ -92,35 +92,43 @@ export function Reporte(){
                 </Stack>
             </RadioGroup>
             </Box>
-            <Box margin="20px">
-                <Box display="flex" alignItems="center" gap="10px" paddingLeft="px" >
-                <Text  fontSize='15px'>Solo archivos con mi puntaje</Text>
-                <Switch colorScheme='purple' size='md' />
-                </Box>
-            </Box>
-            <TableContainer>
-                <Table>
-                    <Thead>
-                        <Tr>
-                            <Th>Historial de descargas</Th>
-                            <Th>Velocidad</Th>
-                            <Th>Puntaje Promedio de descarga</Th>
-                        </Tr>
-                    </Thead>
-                    <Tbody>
-                        {sortContent(contenido).map(cont=>(
-                        <Tr key={cont.id}>
-                            <Td > <Icon as={cont.tipo_contenido == "musica" ? FaMusic : FaFileAlt }/>{cont.titulo}</Td>
-                            <Td> {cont.velocidad}</Td>
-                            <Td display="flex"  justifyContent="center" >{cont.puntaje_promedio}</Td>
-                        </Tr>
 
-                        ))}
-                    </Tbody>
-                </Table>
-            </TableContainer>
+        <Box margin="20px">
+            <Table display="flex" alignItems="center" gap="10px" paddingLeft="px" >
+            <Text  fontSize='15px'>Solo archivos con mi puntaje</Text>
+            <Switch colorScheme='purple' size='md' />
+            </Table>
         </Box>
+        <TableContainer>
+            <Table>
+                <Thead>
+                    <Tr>
+                        <Th fontSize="lg">Historial de descargas</Th>
+                        <Th fontSize="lg">Velocidad</Th>
+                        <Th fontSize="lg">Puntaje Promedio de descarga</Th>
+                    </Tr>
+                </Thead>
+                <Tbody>
+                    {sortContent(contenido).map(cont=>(
+                    <Tr key={cont.id}>
+                        <Td > <Icon as={cont.tipo_contenido == "musica" ? FaMusic : FaFileAlt }/> {cont.titulo}</Td>
+                        <Td> {cont.velocidad}</Td>
+                        <Td display="flex"  justifyContent="center" > {cont.puntaje_promedio}</Td>
+                    </Tr>
 
-    </>
+                    ))}
+                </Tbody>
+            </Table>
+        </TableContainer>
+      </Box>
+
+
+
+
+
+
+
+
+        </>
     )
 }

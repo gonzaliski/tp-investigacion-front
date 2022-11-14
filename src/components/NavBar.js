@@ -16,7 +16,9 @@ export function NavBar() {
   const navigate = useNavigate()
   const location = useLocation()
   function handleActive(param){
-    setActive(!active);
+    if(location.pathname != param){
+      setActive(!active);
+    }
     navigate(param,{replace:'true'})
     //router go wherever
   };
