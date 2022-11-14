@@ -16,12 +16,20 @@ export function Inicio() {
   const goToEditar = (id) => {
     navigate(`/encuesta/editar/${id}`,{replace:'true'})
   }
-  const getAllContenidos = () => {
-    const content = contenidoService.getAllContenidos()
+  // const getAllContenidos = () => {
+  //   const content = contenidoService.getAllContenidos()
+  //   setContenidos(content)
+  // }
+
+  const getAllContenidos = async () => {
+    const content = await contenidoService.getAll()
     setContenidos(content)
   }
 
   const [contenidos, setContenidos] = useState([])
+
+
+  
 
   useEffect( () => {
     getAllContenidos()
@@ -34,7 +42,7 @@ export function Inicio() {
       <Box>
       <Text align="left" fontSize='2xl'>Nueva descarga</Text>
         <Box w="80vw" py="10px" px="15px" border="1px solid gray">
-          <HStack>
+            <HStack>
             <Select maxW="40%"  placeholder="Seleccionar contenido">
               <option>Contenido</option>
               <option>Otro</option>
