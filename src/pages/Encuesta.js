@@ -4,17 +4,21 @@ import { MyButton } from '../components/MyButton';
 import EncuestaForm  from '../components/EncuestaForm';
 import { encuestaService } from './../services/EncuestaService';
 import { EncuestaDom } from './../domain/encuestaDomain';
+import { Navigate, useNavigate } from 'react-router-dom';
+
 
 export function Encuesta() {
+
+  const navigate = useNavigate()
+
   const handleSubmit = (e, encu) => {
     e.preventDefault()
-    const enc = EncuestaDom.fromJSON(encu)
-    setEncuesta(enc)
-
+    const enc = EncuestaDom.fromJSON(encu)  
     encuestaService.createEncuesta(enc)
+    navigate('/')
   }
 
-  const [encuesta, setEncuesta] = useState({})
+
 
   return (
     <EncuestaForm handleSubmit={handleSubmit}>

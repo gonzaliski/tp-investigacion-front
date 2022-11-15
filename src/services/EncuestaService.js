@@ -49,13 +49,8 @@ class EncuestaService {
        
     }
 
-    async getEncuestaById(idUsuario, idContenido){
-        const encuestaJSON = await axios.get(`${REST_URL_SERVER}/getEncuesta`, {
-            params: {
-                idUsuario,
-                idContenido
-            }
-        })
+    async getEncuestaById(idEncuesta){
+        const encuestaJSON = await axios.get(`${REST_URL_SERVER}/getEncuestaById/${idEncuesta}`)
         console.log(encuestaJSON.data);
         return EncuestaDom.fromJSON(encuestaJSON.data)
     }

@@ -14,20 +14,14 @@ const EditarEncuesta = () => {
     const [encuesta, setEncuesta] = useState({})
     const navigate = useNavigate()
     
-    const contId = useParams('id')
+    const encId = useParams('idEncuesta')
+    
     const getEncuestaById = async () => {
-        const cont = await encuestaService.getEncuestaById(user.id, +contId.id)
-        setEncuesta(cont)
-        console.log('encu',cont);
+        const enc = await encuestaService.getEncuestaById(+encId.idRespuesta)
+        setEncuesta(enc)
     }
-
-    // const handleSubmit = () => {
-    //     setEncuesta(encuesta)
-    //     encuestaService.actualizarEncuesta(encuesta)
-    //     contenidoService.actualizarPuntaje(encuesta.id, encuesta.puntaje)
-    //     navigate('/')
-    // }   
-     const handleSubmit = (e) => {
+   
+    const handleSubmit = (e) => {
         e.preventDefault()
         setEncuesta(encuesta)
         encuestaService.actualizarEncuesta(encuesta)

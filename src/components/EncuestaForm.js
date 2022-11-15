@@ -18,9 +18,9 @@ import { user } from './../services/AuthService';
 
 const EncuestaForm = (props) => {
 
-    const idContenido = +(new URL(document.location)).searchParams.get('idContenido') 
+    const idDescarga = +(new URL(document.location)).searchParams.get('idDescarga') 
     const [encuesta, setEncuesta] = useState({
-      idContenido,
+      idDescarga,
       idUsuario: user.id,
       puntaje: 5
     })
@@ -41,14 +41,15 @@ const EncuestaForm = (props) => {
       setSliderValue(val)
       encuesta['puntaje'] = val
       setEncuesta({...encuesta})
+      console.log(encuesta)
       
     }
 
     useEffect(() => {      
       const getEncuesta = () => {
         if(props.encuesta){
-          console.log('encuestaaa', props.encuesta)
           setEncuesta(props.encuesta)
+          console.log('encuestaaa',encuesta)
         } 
       }
       getEncuesta()

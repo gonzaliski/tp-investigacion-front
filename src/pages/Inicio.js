@@ -5,6 +5,8 @@ import { useEffect, useState } from 'react'
 
 import { MyButton } from '../components/MyButton';
 import { contenidoService } from './../services/ContenidoService';
+import { user } from './../services/AuthService';
+import { descargaService } from './../services/DescargaService';
 
 export function Inicio() {
   const navigate = useNavigate()
@@ -15,8 +17,8 @@ export function Inicio() {
     navigate({pathname: "/encuesta",replace:'true', search: `?${createSearchParams(params)}`})
   }
 
-  const goToEditar = (id) => {
-    navigate(`/encuesta/editar/${id}`,{replace:'true'})
+  const goToEditar = (idRespuesta) => {
+    navigate(`/encuesta/editar/${idRespuesta}`,{replace:'true'})
   }
   // const getAllContenidos = () => {
   //   const content = contenidoService.getAllContenidos()
@@ -29,8 +31,10 @@ export function Inicio() {
     setContenidos(content)
   }
 
-  const handleDownload = (id) => {
-    goToEncuesta(id)
+  const handleDownload = async (descarga) => {
+    const descargaId = await descargaService.createDescarga(descarga)
+    goToEncuesta(descargaId.data)
+
   }
 
   const [contenidos, setContenidos] = useState([])
@@ -45,9 +49,9 @@ export function Inicio() {
   return (
     <>
       <Heading>Inicio</Heading>
-      <Box>
-      <Text align="left" fontSize='2xl'>Nueva descarga</Text>
-        <Box w="80vw" py="10px" px="15px" border="1px solid gray">
+      <Flex gap={5} direction='column'>
+      <Box borderBottom='1px solid #7c4cf2'><Text fontWeight='bold' align="left" fontSize='3xl'>Nueva descarga</Text></Box>
+        {/* <Box w="80vw" py="10px" px="15px" border="1px solid gray">
             <HStack>
             <Select maxW="40%"  placeholder="Seleccionar contenido">
               <option>Contenido</option>
@@ -59,14 +63,14 @@ export function Inicio() {
             <Spacer></Spacer>
             <MyButton handleClick={goToEncuesta}>Descargar</MyButton>
           </HStack>
-        </Box>
+        </Box> */}
         <TableContainer>
             <Table>
                 <Thead>
                     <Tr>
                         <Th fontSize="lg">Historial de descargas</Th>
                         <Th fontSize="lg">Velocidad</Th>
-                        <Th fontSize="lg">Mejor puntaje</Th>
+                        <Th fontSize="lg">Mi puntaje</Th>
                         <Th fontSize="lg">Puntaje Promedio</Th>
                     </Tr>
                 </Thead>
@@ -74,17 +78,20 @@ export function Inicio() {
                     {contenidos.map(cont=>(
                     <Tr key={cont.id}>
                         <Td> <Icon as={cont.tipoContenido == "musica" ? FaMusic : FaFileAlt }/> {cont.titulo}</Td>
-                        <Td> {cont.velocidadPromedio} Mbps</Td>
+                        <Td> {cont.velocidadPromedio? `${cont.velocidadPromedio} Mbps` : null}</Td>
                         <Td  > {cont.puntajeMax || null}</Td>
                         <Td> {cont.puntajePromedio || null}</Td>
-                        <Td> <Flex gap={3}><Icon as={FaDownload} color='#7c4cf2' cursor='pointer' onClick={() => handleDownload(cont.id)}/>{cont.usuarioResponde? <Icon cursor='pointer' onClick={() => goToEditar(cont.id)} as={FaEdit} color='#7c4cf2'/> : null}</Flex> </Td>
+                        <Td> <Flex gap={3}>
+                          <Icon as={FaDownload} color='#7c4cf2' cursor='pointer' onClick={() => handleDownload(cont)}/>{cont.idUsuarioResponde === user.id ? 
+                          <Icon cursor='pointer' onClick={() => goToEditar(cont.idRespuesta)} as={FaEdit} color='#7c4cf2'/> : null}</Flex> 
+                        </Td>
                     </Tr>
 
                     ))}
                 </Tbody>
             </Table>
         </TableContainer>
-      </Box>
+      </Flex>
     </>
   );
 }

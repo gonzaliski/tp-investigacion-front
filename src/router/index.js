@@ -11,7 +11,7 @@ function AppRoutes() {
           <Route index element={<Inicio/>} />
           <Route path="/reporte" element={<Reporte />} />
           <Route path="/encuesta" element={<Encuesta />} />
-          <Route path="/encuesta/editar/:id" element={<EditarEncuesta />} />
+          <Route path="/encuesta/editar/:idRespuesta" element={<EditarEncuesta />} />
         </Route>
       </Routes>
     );
