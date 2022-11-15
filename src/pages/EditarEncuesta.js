@@ -40,7 +40,7 @@ const EditarEncuesta = () => {
     return (
         <EncuestaForm encuesta={encuesta} handleSubmit={handleSubmit}>
             <Flex justify='flex-end' gap={3}>
-                <MyButton outlined='true' onClick={handleDelete}> <Icon as={FaTrashAlt} color='#7c4cf2'/> Eliminar</MyButton>
+                <MyButton outlined='true' handleClick={handleDelete}> <Icon as={FaTrashAlt} color='#7c4cf2'/> Eliminar</MyButton>
                 <MyButton type="submit">Guardar</MyButton>
             </Flex>
         </EncuestaForm>

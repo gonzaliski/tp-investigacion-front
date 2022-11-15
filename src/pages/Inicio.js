@@ -7,11 +7,17 @@ import { MyButton } from '../components/MyButton';
 import { contenidoService } from './../services/ContenidoService';
 import { user } from './../services/AuthService';
 import { descargaService } from './../services/DescargaService';
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+import { VscError } from "react-icons/vsc";
+import { AiFillCheckCircle } from "react-icons/ai";
+
+
 
 export function Inicio() {
+  const MySwal = withReactContent(Swal)
   const navigate = useNavigate()
   
-
   const goToEncuesta = (id) => {
     const params = {idDescarga: id}
     navigate({pathname: "/encuesta",replace:'true', search: `?${createSearchParams(params)}`})
@@ -20,10 +26,6 @@ export function Inicio() {
   const goToEditar = (idRespuesta) => {
     navigate(`/encuesta/editar/${idRespuesta}`,{replace:'true'})
   }
-  // const getAllContenidos = () => {
-  //   const content = contenidoService.getAllContenidos()
-  //   setContenidos(content)
-  // }
 
   const getAllContenidos = async () => {
     const content = await contenidoService.getAll()
@@ -32,8 +34,39 @@ export function Inicio() {
   }
 
   const handleDownload = async (descarga) => {
-    const descargaId = await descargaService.createDescarga(descarga)
-    goToEncuesta(descargaId.data)
+    try{
+      const descargaId = await descargaService.createDescarga(descarga)
+      // goToEncuesta(descargaId.data)
+      MySwal.fire({
+        icon:'success',
+        title: <Text size='3x1' fontWeight='bold'>Descarga realizada con exito</Text>,
+        confirmButtonText: <MyButton >Realizar encuesta</MyButton>,
+        showCancelButton: true,
+        cancelButtonText: <MyButton outlined='true' >Regresar</MyButton>,
+        cancelButtonColor: 'white'
+      })
+      .then((result) => {
+        if(result.isConfirmed){
+          goToEncuesta(descargaId.data)
+        }
+        else if (result.isDismissed || result.isDenied){
+          navigate('/')  
+        }
+      })
+    } catch(e) {
+      MySwal.fire({
+        icon:'error',
+        title: <Text size='3x1' fontWeight='bold'>Oops! Hubo un problema</Text>,
+        showConfirmButton: false,
+        showCancelButton: true,
+        cancelButtonText: <p>Regresar</p>,
+        cancelButtonColor: 'red'
+      }).then((result) => {
+        if (result.isDismissed || result.isDenied){
+          navigate('/')  
+        }
+      })
+    }
 
   }
 
@@ -51,19 +84,6 @@ export function Inicio() {
       <Heading>Inicio</Heading>
       <Flex gap={5} direction='column'>
       <Box borderBottom='1px solid #7c4cf2'><Text fontWeight='bold' align="left" fontSize='3xl'>Nueva descarga</Text></Box>
-        {/* <Box w="80vw" py="10px" px="15px" border="1px solid gray">
-            <HStack>
-            <Select maxW="40%"  placeholder="Seleccionar contenido">
-              <option>Contenido</option>
-              <option>Otro</option>
-              <option>Una cancion</option>
-              <option>Un doc</option>
-              <option>Otro doc</option>
-            </Select>
-            <Spacer></Spacer>
-            <MyButton handleClick={goToEncuesta}>Descargar</MyButton>
-          </HStack>
-        </Box> */}
         <TableContainer>
             <Table>
                 <Thead>
