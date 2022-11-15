@@ -44,13 +44,28 @@ export function Reporte(){
 
   const[contenido , setContenido] = useState([])
 
-  const traerReporte = async () => {
-    const contenido = await reporteService.allInstance()
-    setContenido(contenido)
+  
+
+  const filtroUsuario = ()=> {
+       traerReporte()
+       setBoton(!boton)
   }
 
+  const traerReporte = async () => {
+    if(boton != true ) {
+        setContenido(await reporteService.allInstanceUser())}
+        else{
+        setContenido(await reporteService.allInstance())}
+   
+  }
+
+  const traerReporte2 = async()=> {
+    setContenido(await reporteService.allInstance())}
+
+
+
   useEffect( () => {
-    traerReporte ()
+    traerReporte2()
   }, [])
   
     return(
@@ -71,10 +86,10 @@ export function Reporte(){
         <Box margin="20px">
             <Box display="flex" alignItems="center" gap="10px" paddingLeft="px" >
             <Text  fontSize='15px'>Solo archivos con mi puntaje</Text>
-            <Text>{boton.toString()}</Text>
             <Switch 
             id="email-alerts"
-            onChange = {() => setBoton(!boton)}
+            onChange = {() => filtroUsuario()}
+
             colorScheme='purple' 
             size='md' />
             </Box>
