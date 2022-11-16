@@ -19,15 +19,15 @@ const EditarEncuesta = () => {
         setEncuesta(enc)
     }
    
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
         setEncuesta(encuesta)
-        encuestaService.actualizarEncuesta(encuesta)
+        await encuestaService.actualizarEncuesta(encuesta)
         navigate('/')
     }
 
-    const handleDelete = () => {
-        encuestaService.eliminarEncuesta(encuesta)
+    const handleDelete = async () => {
+        await encuestaService.eliminarEncuesta(encuesta)
         navigate('/')
     }
 

@@ -10,10 +10,10 @@ export function Encuesta() {
 
   const navigate = useNavigate()
 
-  const handleSubmit = (e, encu) => {
+  const handleSubmit = async (e, encu) => {
     e.preventDefault()
     const enc = EncuestaDom.fromJSON(encu)  
-    encuestaService.createEncuesta(enc)
+    await encuestaService.createEncuesta(enc)
     navigate('/')
   }
 
