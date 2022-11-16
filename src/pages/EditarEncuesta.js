@@ -6,8 +6,6 @@ import { FaTrashAlt } from "react-icons/fa";
 import { useParams, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { encuestaService } from './../services/EncuestaService';
-import { contenidoService } from './../services/ContenidoService';
-import { user } from './../services/AuthService';
 
 const EditarEncuesta = () => {
 
@@ -35,6 +33,7 @@ const EditarEncuesta = () => {
 
     useEffect( () => {
         getEncuestaById()
+        // eslint-disable-next-line
     }, [])
 
     return (

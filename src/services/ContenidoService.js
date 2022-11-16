@@ -5,12 +5,6 @@ import { user } from './AuthService';
 
 class ContenidoService {
     contenidos
-
-    // async getAllContenidos(){
-    //     const cont = await axios.get(`${REST_URL_SERVER}/${user.id}`)
-
-    //     return this.contenidos
-    // }  
     
     async getAll(){
         const contenidoJson = await axios.get(`${REST_URL_SERVER}/${user.id}`)

@@ -1,16 +1,14 @@
-import { Heading, Box, Text, HStack, Select, Spacer, TableContainer, Table, Thead, Tr, Td, Th, Tbody, Icon, Flex } from '@chakra-ui/react';
+import { Heading, Box, Text, TableContainer, Table, Thead, Tr, Td, Th, Tbody, Icon, Flex } from '@chakra-ui/react';
 import { FaMusic,FaFileAlt, FaDownload, FaEdit } from "react-icons/fa"
 import { createSearchParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react'
-
 import { MyButton } from '../components/MyButton';
 import { contenidoService } from './../services/ContenidoService';
 import { user } from './../services/AuthService';
 import { descargaService } from './../services/DescargaService';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
-import { VscError } from "react-icons/vsc";
-import { AiFillCheckCircle } from "react-icons/ai";
+
 
 
 
@@ -102,7 +100,7 @@ export function Inicio() {
                 <Tbody>
                     {contenidos.map(cont=>(
                     <Tr key={cont.id}>
-                        <Td> <Icon as={cont.tipoContenido == "musica" ? FaMusic : FaFileAlt }/> {cont.titulo}</Td>
+                        <Td> <Icon as={cont.tipoContenido === "musica" ? FaMusic : FaFileAlt }/> {cont.titulo}</Td>
                         <Td> {cont.velocidadPromedio? `${cont.velocidadPromedio} Mbps` : null}</Td>
                         <Td  > {cont.puntajeMax || null}</Td>
                         <Td> {cont.puntajePromedio || null}</Td>

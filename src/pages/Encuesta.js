@@ -1,10 +1,9 @@
 import { Box } from '@chakra-ui/react';
-import { useState } from 'react';
 import { MyButton } from '../components/MyButton';
 import EncuestaForm  from '../components/EncuestaForm';
 import { encuestaService } from './../services/EncuestaService';
 import { EncuestaDom } from './../domain/encuestaDomain';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 export function Encuesta() {
