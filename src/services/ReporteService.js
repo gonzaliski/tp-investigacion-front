@@ -5,10 +5,11 @@ import { REST_URL_SERVER } from './../configuration';
 
 class ReporteService {
 
-    async allInstanceUser(){
-        const contenidoJson = await axios.get(`${REST_URL_SERVER}/getReporte`,{
+    async allInstanceUser(order){
+        const contenidoJson = await axios.get(`${REST_URL_SERVER}/getReporte/`,{
             params : {
-                idUsuario : user.id
+                idUsuario : user.id,
+                orderBy : order
             }
         })
         const contenidos = contenidoJson.data.map((contenidoJson) =>  ContendidoReporte.fromJson(contenidoJson) )
@@ -16,8 +17,13 @@ class ReporteService {
         return contenidos
 
     }
-    async allInstance(){
-        const contenidoJson = await axios.get(`${REST_URL_SERVER}/getReporte`)
+    async allInstance(order){
+        const contenidoJson = await axios.get(`${REST_URL_SERVER}/getReporte`,{
+            params : {
+                orderBy : order
+            }
+        }
+        )
         const contenidos = contenidoJson.data.map((contenidoJson) =>  ContendidoReporte.fromJson(contenidoJson) )
         console.info(contenidos)
         return contenidos
