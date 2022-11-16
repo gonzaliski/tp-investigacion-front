@@ -34,6 +34,11 @@ export function Inicio() {
   }
 
   const handleDownload = async (descarga) => {
+
+    const refreshPage = () => {
+      window.location.reload(false);
+    }
+
     try{
       const descargaId = await descargaService.createDescarga(descarga)
       // goToEncuesta(descargaId.data)
@@ -50,7 +55,7 @@ export function Inicio() {
           goToEncuesta(descargaId.data)
         }
         else if (result.isDismissed || result.isDenied){
-          navigate('/')  
+          refreshPage()
         }
       })
     } catch(e) {

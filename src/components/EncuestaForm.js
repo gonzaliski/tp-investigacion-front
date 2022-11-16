@@ -22,6 +22,8 @@ const EncuestaForm = (props) => {
 
     const idDescarga = +(new URL(document.location)).searchParams.get('idDescarga') 
     const [encuesta, setEncuesta] = useState({
+      resumenPositivo: '',
+      resumenNegativo: '',
       idDescarga,
       idUsuario: user.id,
       puntaje: 5
