@@ -3,7 +3,7 @@ import { Heading, Box, Text, HStack,Select, Stack,Spacer,Switch, TableContainer,
 import React from 'react';
 
 import { FaMusic,FaFileAlt } from "react-icons/fa"
-import { useNavigate } from 'react-router-dom';
+import { renderMatches, useNavigate } from 'react-router-dom';
 
 import { MyButton } from '../components/MyButton';
 import  { useEffect ,useState } from 'react'
@@ -13,69 +13,59 @@ import { reporteService } from '../services/ReporteService';
  
 export function Reporte(){
 
-    const [value, setValue] = React.useState('1')
-      const contenidos = [
-          {
-          id:1,
-          titulo:"Smells like teen spirit - Nirvana",
-          velocidad:"15mbps",
-          puntaje:8.6,
-          puntaje_promedio:8.6,
-          tipo_contenido:"musica"
-          },
-          {
-          id:2,
-          titulo:"Wind of change - Scorpions",
-          velocidad:"13mbps",
-          puntaje:null,
-          puntaje_promedio:7.8,
-          tipo_contenido:"musica"
-  
-          },
-          {
-          id:3,
-          titulo:"Resumen primer parcial - Base de datos",
-          velocidad:"12mbps",
-          puntaje:null,
-          puntaje_promedio:8.3,
-          tipo_contenido:"documento"
-  
-          },
-          {
-          id:4,
-          titulo:"Everlong - Foo Fighters",
-          velocidad:"14mbps",
-          puntaje:9.2,
-          puntaje_promedio:9.2,
-          tipo_contenido:"musica"
-  
-          },
-          {
-          id:5,
-          titulo:"Resumen segundo parcial - Base de datos",
-          velocidad:"13mbps",
-          puntaje:8.5,
-          puntaje_promedio:8.5,
-          tipo_contenido:"documento"
-  
-          }
-  
-  ]
+    const [value, setValue] = React.useState("1")
 
-  const sortContent = (contentList) => {
-   return contentList.sort((a, b) => b.puntaje_promedio - a.puntaje_promedio)
-   
+    const [boton, setBoton] = React.useState(false)
+     
+   const orderby = (Lista) => {
+    if(value == "1") return  sortPuntaje(Lista)
+    if(value == "2") return  sortVelocidad(Lista)
+    if(value == "3") return  sortTitulo(Lista)
+
+   }  
+
+  const sortTitulo = (contentList) => {
+   return contentList.sort(function(a,b){
+    if(a.titulo > b.titulo){
+        return 1;
+    }
+    if(a.titulo < b.titulo){
+        return -1;
+    }
+    return 0
+   })
+  } 
+  const sortVelocidad = (contentList) => {
+   return contentList.sort((a,b) => b.velocidadPromedio - a.velocidadPromedio)
+  } 
+  const sortPuntaje = (contentList) => {
+   return contentList.sort((a, b) => a.puntajePromedio - b.puntajePromedio)
   }
 
   const[contenido , setContenido] = useState([])
 
-  const traerReporte = async () => {
-    const contenido = await reporteService.allInstance()
-    setContenido(contenido)
+  
+
+  const filtroUsuario = ()=> {
+       traerReporte()
+       setBoton(!boton)
   }
 
+  const traerReporte = async () => {
+    if(boton != true ) {
+        setContenido(await reporteService.allInstanceUser())}
+        else{
+        setContenido(await reporteService.allInstance())}
+   
+  }
+
+  const traerReporte2 = async()=> {
+    setContenido(await reporteService.allInstance())}
+
+
+
   useEffect( () => {
-    traerReporte ()
+    traerReporte2()
   }, [])
   
     return(
@@ -94,10 +84,15 @@ export function Reporte(){
             </Box>
 
         <Box margin="20px">
-            <Table display="flex" alignItems="center" gap="10px" paddingLeft="px" >
+            <Box display="flex" alignItems="center" gap="10px" paddingLeft="px" >
             <Text  fontSize='15px'>Solo archivos con mi puntaje</Text>
-            <Switch colorScheme='purple' size='md' />
-            </Table>
+            <Switch 
+            id="email-alerts"
+            onChange = {() => filtroUsuario()}
+
+            colorScheme='purple' 
+            size='md' />
+            </Box>
         </Box>
         <TableContainer>
             <Table>
@@ -109,11 +104,11 @@ export function Reporte(){
                     </Tr>
                 </Thead>
                 <Tbody>
-                    {sortContent(contenido).map(cont=>(
-                    <Tr key={cont.id}>
+                    {orderby(contenido).map(cont=>(
+                    <Tr key={Math.random()}>
                         <Td > <Icon as={cont.tipo_contenido == "musica" ? FaMusic : FaFileAlt }/> {cont.titulo}</Td>
-                        <Td> {cont.velocidad}</Td>
-                        <Td display="flex"  justifyContent="center" > {cont.puntaje_promedio}</Td>
+                        <Td> {cont.velocidadPromedio} Mbs</Td>
+                        <Td display="flex"  justifyContent="center" > {cont.puntajePromedio}</Td>
                     </Tr>
 
                     ))}
