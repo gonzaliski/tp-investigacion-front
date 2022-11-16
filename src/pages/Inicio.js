@@ -91,7 +91,7 @@ export function Inicio() {
             <Table>
                 <Thead>
                     <Tr>
-                        <Th fontSize="lg">Historial de descargas</Th>
+                        <Th fontSize="lg">Contenidos</Th>
                         <Th fontSize="lg">Velocidad</Th>
                         <Th fontSize="lg">Mi puntaje</Th>
                         <Th fontSize="lg">Puntaje Promedio</Th>
