@@ -22,7 +22,7 @@ const EditarEncuesta = () => {
     const handleSubmit = async(e) => {
         e.preventDefault()
         setEncuesta(encuesta)
-        await ncuestaService.actualizarEncuesta(encuesta)
+        await encuestaService.actualizarEncuesta(encuesta)
         navigate('/')
     }
 
