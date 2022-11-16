@@ -74,7 +74,7 @@ export function Reporte(){
                     <Tr>
                         <Th  fontSize="lg">TITULO</Th>
                         <Th   fontSize="lg">Velocidad</Th>
-                        <Th display="flex" justifyContent="center"  fontSize="lg">Puntaje Promedio de descarga</Th>
+                        <Th display="flex" justifyContent="center"  fontSize="lg">Puntaje Promedio</Th>
                     </Tr>
                 </Thead>
                 <Tbody>
